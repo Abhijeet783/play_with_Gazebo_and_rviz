@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot name="robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="h" value="0.4" />
+  <xacro:property name="rad" value="0.2" />
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+  
+  <xacro:macro name="basse" params="mass">
+    <inertial>
+      <mass value="${mass}" />
+      <inertia ixx="6.19" ixy="0.0" ixz="0.0" iyy="7.03" iyz="0.0" izz="2.47" />
+    </inertial>
+  </xacro:macro>
+  <link name="base_link">
+   </link>
+
+  <link name="chassis">
+    <visual>
+      <geometry>
+        <box size="1.0 1.8 0.7"/>
+      </geometry>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="1.0 1.8 0.7"/>
+      </geometry>
+    </collision>
+    <xacro:basse mass="0.25"/>
+  </link>
+  <joint name="base_to_chassis" type="fixed">
+    
+    <parent link="base_link"/>
+    <child link="chassis"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+  </joint>
+  
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/</robotNamespace>
+    </plugin>
+  </gazebo>
+</robot>

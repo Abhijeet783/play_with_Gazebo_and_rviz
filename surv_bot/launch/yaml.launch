@@ -1,0 +1,23 @@
+<launch>
+  <arg name="model" default="$(find surv_bot)/urdf/robo.xacro"/>
+  <arg name="rvizconfig" default="$(find surv_bot)/rviz/urdf2.rviz" />
+
+  <include file="$(find surv_bot)/launch/gazebo.launch">
+    <arg name="model" value="$(arg model)" />
+  </include>
+  <rosparam command="load"
+            file="$(find surv_bot)/config/diffdrive.yaml"
+            ns="r2d2_diff_drive_controller" />
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
+
+  <node name="r2d2_controller_spawner" pkg="controller_manager" type="spawner"
+    args="r2d2_diff_drive_controller
+          --shutdown-timeout 3"/>
+   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+
+  <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+    <param name="default_topic" value="/r2d2_diff_drive_controller/cmd_vel"/>
+  </node>
+</launch>

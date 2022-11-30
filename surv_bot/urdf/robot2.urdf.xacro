@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" >
+     <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <left_joint>base_to_left_back_wheel</left_joint>
+      <right_joint>base_to_right_back_wheel</right_joint>
+      <wheel_seperation></wheel_seperation>
+    </plugin>
+  </gazebo>
+
+</robot>
